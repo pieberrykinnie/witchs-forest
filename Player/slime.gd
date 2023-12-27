@@ -7,6 +7,7 @@ const JUMP_VELOCITY = -400.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var toward = -1
+var hp = 2
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -21,7 +22,12 @@ func _physics_process(delta):
 
 func _on_wall_detection_body_entered(body):
 	toward *= (-1)
+	print("touching wall")
 
 
-func _on_wall_detection_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
-	toward *= (-1)
+
+
+func _on_bullet_detection_body_entered(body):
+	hp -= 1
+	if hp <= 0:
+		queue_free()
