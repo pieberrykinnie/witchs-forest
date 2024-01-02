@@ -9,3 +9,7 @@ var toward #1 is right, -1 is left
 func _process(delta):
 	var velocity = Vector2.UP.rotated(PI/2)*speed
 	position += velocity*delta*toward
+
+
+func _on_collision_happens_body_entered(body):
+	queue_free()

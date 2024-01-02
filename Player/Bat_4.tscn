@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7nqbnjs8wa1o"]
+
+[ext_resource type="PackedScene" uid="uid://b563ksapfq2qu" path="res://bat.tscn" id="1_slrcm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gd3fo"]
+radius = 247.703
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(114, 81)
+collision_layer = 4
+collision_mask = 2
+
+[node name="Bat" parent="." instance=ExtResource("1_slrcm")]
+position = Vector2(-8, 8)
+
+[node name="Bat2" parent="." instance=ExtResource("1_slrcm")]
+position = Vector2(-29, 20)
+
+[node name="Bat3" parent="." instance=ExtResource("1_slrcm")]
+position = Vector2(6, 32)
+
+[node name="Bat4" parent="." instance=ExtResource("1_slrcm")]
+position = Vector2(22, 10)
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+position = Vector2(-3, 20)
+shape = SubResource("CircleShape2D_gd3fo")

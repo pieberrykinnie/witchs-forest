@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://b563ksapfq2qu"]
+
+[ext_resource type="Texture2D" uid="uid://bpqwhkvjwiv23" path="res://icon.svg" id="1_bcx0t"]
+[ext_resource type="Script" path="res://bat.gd" id="1_qdvlp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0mjj7"]
+radius = 134.634
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xupc5"]
+size = Vector2(46, 51)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_un75x"]
+size = Vector2(44, 43)
+
+[node name="Bat" type="CharacterBody2D"]
+position = Vector2(58, 23)
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_qdvlp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, -2.38419e-07)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("1_bcx0t")
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="PlayerDetection"]
+position = Vector2(1, -0.5)
+shape = SubResource("CircleShape2D_0mjj7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 4.5)
+shape = SubResource("RectangleShape2D_xupc5")
+debug_color = Color(0.643137, 0.388235, 0.894118, 0.419608)
+
+[node name="BulletDetection" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection"]
+position = Vector2(1, -0.5)
+shape = SubResource("RectangleShape2D_un75x")
+debug_color = Color(0.631373, 0.517647, 0.345098, 0.419608)
+
+[connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
+[connection signal="body_entered" from="BulletDetection" to="." method="_on_bullet_detection_body_entered"]

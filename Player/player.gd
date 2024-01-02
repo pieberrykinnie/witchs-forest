@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 
 const fireball_path = preload("res://fireball.tscn")
-const SPEED = 300.0
+const SPEED = 200.0
 const JUMP_VELOCITY = -400.0
 const COOLDOWN = 0.5
 
@@ -50,8 +50,19 @@ func shoot():
 
 func _on_area_2d_body_entered(body):
 	hp -= 1
-	print(hp)
+	#print(hp)
 	if hp == 0:
 		hp = 8
 		get_tree().reload_current_scene()
 
+
+
+func _on_enemy_detection_body_entered(body):
+	hp -= 1
+	#print(hp)
+	if hp == 0:
+		hp = 8
+		get_tree().reload_current_scene()
+	velocity.y = JUMP_VELOCITY
+	velocity.x = -toward*SPEED	
+	move_and_slide()

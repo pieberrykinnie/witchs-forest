@@ -22,12 +22,13 @@ func _physics_process(delta):
 
 func _on_wall_detection_body_entered(body):
 	toward *= (-1)
-	print("touching wall")
+	#print("touching wall")
 
 
 
 
 func _on_bullet_detection_body_entered(body):
 	hp -= 1
+	print("Got shot")
 	if hp <= 0:
 		queue_free()

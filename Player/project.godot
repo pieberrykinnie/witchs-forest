@@ -14,3 +14,10 @@ config/name="Player"
 run/main_scene="res://player.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+
+[layer_names]
+
+2d_render/layer_1="Map"
+2d_render/layer_2="Player"
+2d_render/layer_3="Slime"
+2d_render/layer_4="FireBall"

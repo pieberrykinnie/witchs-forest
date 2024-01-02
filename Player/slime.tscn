@@ -13,7 +13,7 @@ size = Vector2(20, 48)
 size = Vector2(20, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hsxx3"]
-size = Vector2(64, 64)
+size = Vector2(80, 64)
 
 [node name="Slime" type="CharacterBody2D"]
 position = Vector2(400, 256)
@@ -29,10 +29,9 @@ shape = SubResource("RectangleShape2D_aorrk")
 debug_color = Color(0.792157, 0.32549, 0.701961, 0.419608)
 
 [node name="WallDetection" type="Area2D" parent="."]
-collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetection"]
-position = Vector2(-46, 0)
+position = Vector2(-40, 0)
 shape = SubResource("RectangleShape2D_kd4np")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="WallDetection"]
@@ -40,6 +39,8 @@ position = Vector2(40, 0)
 shape = SubResource("RectangleShape2D_og4pe")
 
 [node name="BulletDetection" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection"]
 shape = SubResource("RectangleShape2D_hsxx3")
