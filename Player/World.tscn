@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ci26oee24f1nj"]
+[gd_scene load_steps=10 format=3 uid="uid://ci26oee24f1nj"]
 
 [ext_resource type="Script" path="res://World.gd" id="1_d6wgs"]
 [ext_resource type="PackedScene" uid="uid://poiiqfx767ws" path="res://player.tscn" id="1_vajfr"]
 [ext_resource type="PackedScene" uid="uid://ch5cdrttnt2dl" path="res://slime.tscn" id="2_5mn6s"]
 [ext_resource type="PackedScene" uid="uid://b563ksapfq2qu" path="res://bat.tscn" id="3_hvra3"]
+[ext_resource type="PackedScene" uid="uid://b61scngo0hkjj" path="res://boss_1.tscn" id="5_7ndgt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_db4ot"]
 size = Vector2(239.5, 683.5)
@@ -78,5 +79,8 @@ collision_mask = 2
 position = Vector2(2591, 233)
 shape = SubResource("RectangleShape2D_si7yq")
 debug_color = Color(0.247059, 0.607843, 0.517647, 0.419608)
+
+[node name="Boss 1" parent="." instance=ExtResource("5_7ndgt")]
+position = Vector2(1492, 258)
 
 [connection signal="body_entered" from="Gate_Boss" to="." method="_on_gate_boss_body_entered"]

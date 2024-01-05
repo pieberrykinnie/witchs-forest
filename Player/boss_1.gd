@@ -1,16 +1,24 @@
 extends CharacterBody2D
 
-
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+#Loading file
 const fireball_path = preload("res://fireball.tscn")
 const summon_ball_path = preload("res://summon_ball.tscn")
 const summon_slime_path = preload("res://slime.tscn")
 const summon_bat_path = preload("res://bat.tscn")
 
+#general constants 
+const SPEED = 300.0
+const JUMP_VELOCITY = -400.0
+const ABILITY = ["left", "right", "up", "jump_and_hit", "charge_and_hit", "fireball", "summon_monster"]
+
 #General variables
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") # Get the gravity from the project settings to be synced with RigidBody nodes.
 var toward = 1 #1 is the boss moving to the right, -1 is the boss moving to the left
+var decision #what the boss will do
+
+
+#Player Variables
+var player_position
 
 
 #Special jump variables
@@ -35,6 +43,9 @@ var special_fireball_moment_delta = 0.5
 var special_summon = false
 var special_summon_ball
 var special_summon_monster_num = 2 #number of monsters boss can summon
+var special_summon_monster_type
+var special_summon_bat_list = []
+
 #-----------------------------------------------------------------------------
 
 
@@ -47,12 +58,20 @@ func _physics_process(delta):
 			velocity.y += gravity * delta
 
 		# Handle jump.
-		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		if decision == "up" and is_on_floor():
 			velocity.y = JUMP_VELOCITY
 		
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.
-		var direction = Input.get_axis("ui_left", "ui_right")
+		var direction 
+		
+		# Get direction --> 1 moving left, -1 moving right
+		if decision == "left":
+			direction = 1
+		elif decision == "right":
+			direction = -1
+		
+		#Moving horizontally
 		if direction:
 			velocity.x = direction * SPEED
 			if direction > 0:
@@ -63,20 +82,24 @@ func _physics_process(delta):
 
 
 		#Handle special skills
-		if Input.is_action_pressed("jump_and_hit"):
+		if decision == "jump_and_hit":
 			special_jump = true
 			jump_and_hit(position, false)
+			decision = ""
 			
-		if Input.is_action_just_pressed("charge_and_hit"):
+		if decision == "charge_and_hit":
 			special_charge = true
-		
-		if Input.is_action_just_pressed("fireball"):
-			special_fireball = true
+			decision = ""
 			
-		if Input.is_action_just_pressed("summon_ball"):
+		if decision == "fireball":
+			special_fireball = true
+			decision = ""
+			
+		if decision == "summon_monster":
 			special_summon = true
 			special_summon_ball = summon_ball_path.instantiate()
 			summon_circle(special_summon_ball)
+			decision = ""
 		
 		move_and_slide()
 	
@@ -119,9 +142,15 @@ func _physics_process(delta):
 		if special_summon_ball.collision:
 			summon_monster(special_summon_ball.position)
 			special_summon = false
+	
+	for bat in special_summon_bat_list:
+		bat.attack(player_position)
+	
+	###Checking for bat that's dead and remove it from the list###
+			
 #----------------------------------------------------------
 
-
+####SPECIAL SKILLS####
 
 #Special Jump and hit the ground
 func jump_and_hit(pos, hit):
@@ -164,17 +193,22 @@ func summon_circle(summon_ball):
 
 func summon_monster(pos):
 	var rng = RandomNumberGenerator.new()
-	var monster_type = rng.randi_range(1, special_summon_monster_num)
 	var monster 
 	
-	match monster_type: 
+	special_summon_monster_type = rng.randi_range(1, special_summon_monster_num)
+	
+	match special_summon_monster_type: 
 		1:
 			monster = summon_slime_path.instantiate()
 			monster.toward = toward
 		2: 
 			monster = summon_bat_path.instantiate()
-	
+			monster.detect_player = true
+			special_summon_bat_list.append(monster)
+			
 	get_parent().add_child(monster)
 	monster.position = pos
 	print(pos)
 	#print(monster_type)
+
+

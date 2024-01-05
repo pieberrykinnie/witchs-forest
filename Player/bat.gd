@@ -8,7 +8,6 @@ var hp = 1
 var die = false
 
 func _physics_process(delta):
-	
 
 	move_and_slide()
 

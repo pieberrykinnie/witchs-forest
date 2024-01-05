@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://5viysg8vci6f"]
+[gd_scene load_steps=7 format=3 uid="uid://5viysg8vci6f"]
 
 [ext_resource type="PackedScene" uid="uid://b61scngo0hkjj" path="res://boss_1.tscn" id="1_1thd4"]
+[ext_resource type="Script" path="res://Map.gd" id="1_eg3ib"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7vc14"]
 size = Vector2(1001, 120)
@@ -18,6 +19,7 @@ size = Vector2(173, 20)
 
 [node name="Map" type="StaticBody2D" parent="."]
 position = Vector2(30, 44)
+script = ExtResource("1_eg3ib")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map"]
 position = Vector2(476, 314)
