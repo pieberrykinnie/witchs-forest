@@ -4,10 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://bpqwhkvjwiv23" path="res://icon.svg" id="2_565vs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2v2sy"]
-size = Vector2(63, 53.5)
+size = Vector2(68, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gattg"]
-size = Vector2(63, 56)
+size = Vector2(84, 56)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 position = Vector2(132, 92)
@@ -16,7 +16,7 @@ collision_mask = 4
 script = ExtResource("1_3apt5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 1.25)
+position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_2v2sy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -25,10 +25,11 @@ scale = Vector2(0.460938, 0.429688)
 texture = ExtResource("2_565vs")
 
 [node name="Collision Happens" type="Area2D" parent="."]
-collision_mask = 5
+collision_layer = 8
+collision_mask = 21
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collision Happens"]
-position = Vector2(0.5, -5)
+position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_gattg")
 debug_color = Color(0.882353, 0.270588, 0.513726, 0.419608)
 

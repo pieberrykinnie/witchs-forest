@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 #Loading file
-const fireball_path = preload("res://fireball.tscn")
+const fireball_path = preload("res://enemy_bullet.tscn")
 const summon_ball_path = preload("res://summon_ball.tscn")
 const summon_slime_path = preload("res://slime.tscn")
 const summon_bat_path = preload("res://bat.tscn")
@@ -15,7 +15,9 @@ const ABILITY = ["left", "right", "up", "jump_and_hit", "charge_and_hit", "fireb
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") # Get the gravity from the project settings to be synced with RigidBody nodes.
 var toward = 1 #1 is the boss moving to the right, -1 is the boss moving to the left
 var decision #what the boss will do
-
+var hp = 1
+var Iframe = 0
+var die = false
 
 #Player Variables
 var player_position
@@ -51,7 +53,13 @@ var special_summon_bat_list = []
 
 
 func _physics_process(delta):
+	####UPDATING GENERAL VARIABLE####
+	if Iframe > 0:
+		Iframe -= delta
 	
+	
+	
+	####GAME PROCESSING####
 	if not special_charge:
 		# Add the gravity.
 		if not is_on_floor() and not special_jump:
@@ -142,12 +150,25 @@ func _physics_process(delta):
 		if special_summon_ball.collision:
 			summon_monster(special_summon_ball.position)
 			special_summon = false
+			special_summon_ball.destroy()
 	
 	for bat in special_summon_bat_list:
-		bat.attack(player_position)
-	
+		if bat[0]:
+			bat[1].attack(player_position)
+			if bat[1].die:
+				bat[0] = false
+				
+				
 	###Checking for bat that's dead and remove it from the list###
-			
+	var index = 0
+	while index < len(special_summon_bat_list):
+		if special_summon_bat_list[index][0]:
+			index += 1
+		else:
+			special_summon_bat_list[index][1].destroy()
+			for i in range(index, len(special_summon_bat_list) - 1):
+				special_summon_bat_list[i] = special_summon_bat_list[i + 1]
+			special_summon_bat_list.remove_at(len(special_summon_bat_list) - 1)
 #----------------------------------------------------------
 
 ####SPECIAL SKILLS####
@@ -204,7 +225,7 @@ func summon_monster(pos):
 		2: 
 			monster = summon_bat_path.instantiate()
 			monster.detect_player = true
-			special_summon_bat_list.append(monster)
+			special_summon_bat_list.append([true, monster])
 			
 	get_parent().add_child(monster)
 	monster.position = pos
@@ -212,3 +233,15 @@ func summon_monster(pos):
 	#print(monster_type)
 
 
+
+
+func _on_bullet_detection_body_entered(body):
+	if Iframe <= 0:
+		hp -= 1
+		Iframe = 1
+	
+	if hp <= 0:
+		die = true
+
+func destroy():
+	queue_free()

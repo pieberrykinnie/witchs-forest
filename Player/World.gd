@@ -13,15 +13,20 @@ var bats = [$Bat, $Bat2, $Bat3]
 var boss_wait_time = 1
 var boss_action_moment = 0
 var boss_random_ability 
-
+var boss_die = false
 
 
 
 func _process(delta):
 	#Setting boss border
 	#$"Boss 1".special_charge_border = horizontal_map_border
-	$"Boss 1".player_position = $Player.position
-	
+	if not boss_die:
+	#print(boss_die)
+		$"Boss 1".player_position = $Player.position
+		
+		if $"Boss 1".die:
+			$"Boss 1".destroy()
+			boss_die = true
 	####Bat attacking####
 	
 	
@@ -37,10 +42,12 @@ func _process(delta):
 	
 	
 	####Boss Decision Model####
-	boss_action_moment += delta
-	if boss_action_moment >= boss_wait_time:
-		boss_decision_model(delta)
-		boss_action_moment = 0
+	if not boss_die:
+	#print("boss running")
+		boss_action_moment += delta
+		if boss_action_moment >= boss_wait_time:
+			boss_decision_model(delta)
+			boss_action_moment = 0
 	
 	
 	

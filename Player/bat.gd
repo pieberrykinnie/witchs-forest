@@ -33,7 +33,7 @@ func attack(pos):
 
 func _on_bullet_detection_body_entered(body):
 	hp -= 1
-	print("Got shot")
+	#print("Got shot")
 	if hp <= 0:
 		die = true
 

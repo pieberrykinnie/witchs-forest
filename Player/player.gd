@@ -44,7 +44,7 @@ func shoot():
 	var fireball = fireball_path.instantiate()
 	
 	get_parent().add_child(fireball)
-	fireball.position = position + Vector2(100, 0)*toward
+	fireball.position = position + Vector2(1, 0)*toward
 	fireball.toward = toward
 
 

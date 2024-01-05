@@ -29,6 +29,6 @@ func _on_wall_detection_body_entered(body):
 
 func _on_bullet_detection_body_entered(body):
 	hp -= 1
-	print("Got shot")
+	#print("Got shot")
 	if hp <= 0:
 		queue_free()
