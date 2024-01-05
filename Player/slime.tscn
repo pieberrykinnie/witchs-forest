@@ -31,11 +31,11 @@ debug_color = Color(0.792157, 0.32549, 0.701961, 0.419608)
 [node name="WallDetection" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetection"]
-position = Vector2(-40, 0)
+position = Vector2(-40, -8)
 shape = SubResource("RectangleShape2D_kd4np")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="WallDetection"]
-position = Vector2(40, 0)
+position = Vector2(40, -8)
 shape = SubResource("RectangleShape2D_og4pe")
 
 [node name="BulletDetection" type="Area2D" parent="."]

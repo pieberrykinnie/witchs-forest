@@ -14,3 +14,8 @@ func _process(delta):
 		if bats[i].die:
 			bat_in_tree[i] = false
 			bats[i].destroy()
+
+
+func _on_gate_boss_body_entered(body):
+	#get_tree().change_scene_to_file("res://Boss_scene.tscn")
+	pass

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ci26oee24f1nj"]
+[gd_scene load_steps=9 format=3 uid="uid://ci26oee24f1nj"]
 
 [ext_resource type="Script" path="res://World.gd" id="1_d6wgs"]
 [ext_resource type="PackedScene" uid="uid://poiiqfx767ws" path="res://player.tscn" id="1_vajfr"]
@@ -13,6 +13,9 @@ size = Vector2(1909.5, 154)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ryc1w"]
 size = Vector2(1046, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_si7yq"]
+size = Vector2(161, 734)
 
 [node name="World" type="Node2D"]
 position = Vector2(-77, 58)
@@ -47,6 +50,12 @@ offset_top = 298.0
 offset_right = 1980.0
 offset_bottom = 442.0
 
+[node name="Panel2" type="Panel" parent="."]
+offset_left = 2521.0
+offset_top = -194.0
+offset_right = 2730.0
+offset_bottom = 734.0
+
 [node name="Slime" parent="." instance=ExtResource("2_5mn6s")]
 position = Vector2(2059, 328)
 
@@ -60,3 +69,14 @@ position = Vector2(596, 78)
 position = Vector2(946, 150)
 
 [node name="Slime2" parent="." instance=ExtResource("2_5mn6s")]
+
+[node name="Gate_Boss" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gate_Boss"]
+position = Vector2(2591, 233)
+shape = SubResource("RectangleShape2D_si7yq")
+debug_color = Color(0.247059, 0.607843, 0.517647, 0.419608)
+
+[connection signal="body_entered" from="Gate_Boss" to="." method="_on_gate_boss_body_entered"]
