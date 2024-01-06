@@ -11,6 +11,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var toward = 1 #1 is right, -1 is left
 var time = 0
 var hp = 8
+var collision
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -59,7 +60,7 @@ func _on_area_2d_body_entered(body):
 
 func _on_enemy_detection_body_entered(body):
 	hp -= 1
-	#print(hp)
+	#body.destroy()
 	if hp == 0:
 		hp = 8
 		get_tree().reload_current_scene()

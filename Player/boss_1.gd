@@ -15,9 +15,10 @@ const ABILITY = ["left", "right", "up", "jump_and_hit", "charge_and_hit", "fireb
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") # Get the gravity from the project settings to be synced with RigidBody nodes.
 var toward = 1 #1 is the boss moving to the right, -1 is the boss moving to the left
 var decision #what the boss will do
-var hp = 1
+var hp = 20
 var Iframe = 0
 var die = false
+var collision
 
 #Player Variables
 var player_position
@@ -236,6 +237,8 @@ func summon_monster(pos):
 
 
 func _on_bullet_detection_body_entered(body):
+	body.collision = true
+	
 	if Iframe <= 0:
 		hp -= 1
 		Iframe = 1

@@ -8,6 +8,7 @@ const JUMP_VELOCITY = -400.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var toward = -1
 var hp = 2
+var collision
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -29,6 +30,6 @@ func _on_wall_detection_body_entered(body):
 
 func _on_bullet_detection_body_entered(body):
 	hp -= 1
-	#print("Got shot")
+	body.collision = true
 	if hp <= 0:
 		queue_free()

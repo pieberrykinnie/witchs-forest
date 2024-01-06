@@ -6,6 +6,7 @@ const SPEED = 1.0
 var detect_player = false
 var hp = 1
 var die = false
+var collision
 
 func _physics_process(delta):
 
@@ -33,7 +34,7 @@ func attack(pos):
 
 func _on_bullet_detection_body_entered(body):
 	hp -= 1
-	#print("Got shot")
+	body.collision = true
 	if hp <= 0:
 		die = true
 

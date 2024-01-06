@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0ma6ocn5xtjr"]
+[gd_scene load_steps=6 format=3 uid="uid://c0ma6ocn5xtjr"]
 
 [ext_resource type="Script" path="res://fireball.gd" id="1_3apt5"]
 [ext_resource type="Texture2D" uid="uid://bpqwhkvjwiv23" path="res://icon.svg" id="2_565vs"]
@@ -6,13 +6,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2v2sy"]
 size = Vector2(68, 50)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gattg"]
-size = Vector2(84, 56)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_88blg"]
+size = Vector2(68, 62)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_drd7a"]
+size = Vector2(66, 51)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 position = Vector2(132, 92)
 collision_layer = 8
-collision_mask = 4
+collision_mask = 0
 script = ExtResource("1_3apt5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -24,13 +27,20 @@ position = Vector2(1, 0)
 scale = Vector2(0.460938, 0.429688)
 texture = ExtResource("2_565vs")
 
-[node name="Collision Happens" type="Area2D" parent="."]
+[node name="Bullet_collide_bullet" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 21
+collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision Happens"]
-position = Vector2(0, -5)
-shape = SubResource("RectangleShape2D_gattg")
-debug_color = Color(0.882353, 0.270588, 0.513726, 0.419608)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bullet_collide_bullet"]
+shape = SubResource("RectangleShape2D_88blg")
+debug_color = Color(0.788235, 0.360784, 0.619608, 0.419608)
 
-[connection signal="body_entered" from="Collision Happens" to="." method="_on_collision_happens_body_entered"]
+[node name="Wall_Detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Detection"]
+position = Vector2(-1, -5.5)
+shape = SubResource("RectangleShape2D_drd7a")
+debug_color = Color(0.313726, 0.615686, 0.309804, 0.419608)
+
+[connection signal="body_entered" from="Bullet_collide_bullet" to="." method="_on_bullet_collide_bullet_body_entered"]
+[connection signal="body_entered" from="Wall_Detection" to="." method="_on_wall_detection_body_entered"]

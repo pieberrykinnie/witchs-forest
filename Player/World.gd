@@ -32,6 +32,7 @@ func _process(delta):
 	
 	var bats = [$Bat, $Bat2, $Bat3]
 	for i in range(len(bat_in_tree)):
+		#print(bats[i])
 		if bat_in_tree[i]:
 			if bats[i].detect_player:
 				bats[i].attack($Player.position)
