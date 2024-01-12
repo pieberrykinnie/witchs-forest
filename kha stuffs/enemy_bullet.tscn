@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjikihqsnc10m"]
+
+[ext_resource type="Script" path="res://enemy_bullet.gd" id="1_1svhl"]
+[ext_resource type="Texture2D" uid="uid://bpqwhkvjwiv23" path="res://icon.svg" id="1_tkak4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dqmvp"]
+size = Vector2(122, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d71kw"]
+size = Vector2(168, 151)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fnrp"]
+size = Vector2(128, 116)
+
+[node name="enemy_bullet" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_1svhl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_dqmvp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_tkak4")
+
+[node name="Collision_Detection" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision_Detection"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_d71kw")
+debug_color = Color(0.698039, 0.388235, 0.776471, 0.419608)
+
+[node name="Wall_detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_detection"]
+position = Vector2(-2, -12)
+shape = SubResource("RectangleShape2D_1fnrp")
+debug_color = Color(0.290196, 0.619608, 0.313726, 0.419608)
+
+[connection signal="body_entered" from="Collision_Detection" to="." method="_on_collision_detection_body_entered"]
+[connection signal="body_entered" from="Wall_detection" to="." method="_on_wall_detection_body_entered"]

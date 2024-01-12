@@ -1,19 +1,103 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0ma6ocn5xtjr"]
+[gd_scene load_steps=13 format=3 uid="uid://c0ma6ocn5xtjr"]
 
 [ext_resource type="Script" path="res://scripts/fireball.gd" id="1_3apt5"]
-[ext_resource type="Texture2D" uid="uid://dd6kxix62f61v" path="res://assets/Character/Little witch/Little witch/Magic Spell/Pngs/magicSpell1.png" id="2_565vs"]
+[ext_resource type="Texture2D" uid="uid://dqxbc2njpi0to" path="res://assets/Character/Little witch/Little witch/Magic Spell/MagicSpellSpriteSheet.png" id="2_nyhro"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2v2sy"]
-size = Vector2(56, 53)
+[sub_resource type="AtlasTexture" id="AtlasTexture_6hni4"]
+atlas = ExtResource("2_nyhro")
+region = Rect2(148, 0, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_speqm"]
+atlas = ExtResource("2_nyhro")
+region = Rect2(115, 0, 23, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt8e4"]
+atlas = ExtResource("2_nyhro")
+region = Rect2(88, 0, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sp8yj"]
+atlas = ExtResource("2_nyhro")
+region = Rect2(54, 0, 27, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4y21t"]
+atlas = ExtResource("2_nyhro")
+region = Rect2(27, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y55m7"]
+atlas = ExtResource("2_nyhro")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rwpck"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6hni4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_speqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt8e4")
+}],
+"loop": false,
+"name": &"default",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sp8yj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4y21t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y55m7")
+}],
+"loop": false,
+"name": &"on_hit",
+"speed": 24.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wkiiw"]
+radius = 3.0
+height = 6.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k078k"]
+radius = 4.0
+height = 18.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gpijp"]
+radius = 4.0
+height = 18.0
 
 [node name="Attack" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 57
 script = ExtResource("1_3apt5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(246, 147.5)
-shape = SubResource("RectangleShape2D_2v2sy")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_rwpck")
+animation = &"on_hit"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(245.5, 149.5)
-scale = Vector2(0.460938, 0.429688)
-texture = ExtResource("2_565vs")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_wkiiw")
+
+[node name="BulletDetection" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 56
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_k078k")
+
+[node name="WallDetection" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetection"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_gpijp")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="BulletDetection" to="." method="_on_bullet_detection_body_entered"]
+[connection signal="body_entered" from="WallDetection" to="." method="_on_wall_detection_body_entered"]

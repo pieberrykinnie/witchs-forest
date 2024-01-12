@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://b61scngo0hkjj"]
+
+[ext_resource type="Texture2D" uid="uid://bpqwhkvjwiv23" path="res://icon.svg" id="1_8s7ot"]
+[ext_resource type="Script" path="res://boss_1.gd" id="1_ax084"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_65nw8"]
+size = Vector2(61, 55)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_duuyy"]
+size = Vector2(81, 75)
+
+[node name="Boss 1" type="CharacterBody2D"]
+position = Vector2(146, 136)
+collision_layer = 4
+script = ExtResource("1_ax084")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.00002, -0.999996)
+scale = Vector2(0.492188, 0.429688)
+texture = ExtResource("1_8s7ot")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, -2.5)
+shape = SubResource("RectangleShape2D_65nw8")
+
+[node name="Bullet_Detection" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bullet_Detection"]
+position = Vector2(-0.5, -6.5)
+shape = SubResource("RectangleShape2D_duuyy")
+debug_color = Color(0.470588, 0.462745, 0.945098, 0.419608)
+
+[connection signal="body_entered" from="Bullet_Detection" to="." method="_on_bullet_detection_body_entered"]

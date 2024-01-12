@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://fdfhargw21au"]
+
+[ext_resource type="Script" path="res://summon_ball.gd" id="1_3mrkk"]
+[ext_resource type="Texture2D" uid="uid://bpqwhkvjwiv23" path="res://icon.svg" id="1_ptc8p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nb0y"]
+size = Vector2(59, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iafiw"]
+size = Vector2(14, 67)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4dk17"]
+size = Vector2(14, 69)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5oiy8"]
+size = Vector2(62, 59)
+
+[node name="Summon_Ball" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_3mrkk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_ptc8p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -2)
+shape = SubResource("RectangleShape2D_0nb0y")
+
+[node name="Get_Collision_Position" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Get_Collision_Position"]
+position = Vector2(-45, 0.5)
+shape = SubResource("RectangleShape2D_iafiw")
+debug_color = Color(0.262745, 0.623529, 0.352941, 0.419608)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Get_Collision_Position"]
+position = Vector2(50, 1.5)
+shape = SubResource("RectangleShape2D_4dk17")
+debug_color = Color(0.286275, 0.619608, 0.337255, 0.419608)
+
+[node name="Wall_detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_detection"]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_5oiy8")
+debug_color = Color(0.647059, 0.513726, 0.25098, 0.419608)
+
+[connection signal="body_entered" from="Get_Collision_Position" to="." method="_on_get_collision_position_body_entered"]
+[connection signal="body_entered" from="Wall_detection" to="." method="_on_wall_detection_body_entered"]
