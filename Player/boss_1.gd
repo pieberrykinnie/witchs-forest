@@ -9,7 +9,9 @@ const summon_bat_path = preload("res://bat.tscn")
 #general constants 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
-const ABILITY = ["left", "right", "up", "jump_and_hit", "charge_and_hit", "fireball", "summon_monster"]
+const ABILITY =  ["jump_and_hit", "charge_and_hit", "fireball", "summon_monster"]
+const MOVING_ABILITY = ["left", "right", "up",]
+const SPECIAL_MOVE_COOLDOWN = 0.3 #cannot use any special move until 3 seconds after using the previous skill
 
 #General variables
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -23,6 +25,10 @@ var collision
 #Player Variables
 var player_position
 
+##SPECIAL MOVE VARIABLES
+var is_special_move_running = false
+var special_move_sleep = false #Can you cast special move or not
+var special_move_timer = 0
 
 #Special jump variables
 var special_jump = false
@@ -92,19 +98,23 @@ func _physics_process(delta):
 
 		#Handle special skills
 		if decision == "jump_and_hit":
+			is_special_move_running = true
 			special_jump = true
 			jump_and_hit(position, false)
 			decision = ""
 			
 		if decision == "charge_and_hit":
+			is_special_move_running = true
 			special_charge = true
 			decision = ""
 			
 		if decision == "fireball":
+			is_special_move_running = true
 			special_fireball = true
 			decision = ""
 			
 		if decision == "summon_monster":
+			is_special_move_running = true
 			special_summon = true
 			special_summon_ball = summon_ball_path.instantiate()
 			summon_circle(special_summon_ball)
@@ -120,7 +130,8 @@ func _physics_process(delta):
 	
 	if special_jump_timer >= 5:
 		jump_and_hit(position, true)
-
+		is_special_move_running = false
+		
 	#Special charge
 	if special_charge:
 		special_charge_timer += delta
@@ -130,7 +141,7 @@ func _physics_process(delta):
 	if special_charge_timer >= 3:
 		special_charge = false
 		special_charge_timer = 0
-
+		is_special_move_running = false
 
 	#Special fireball
 	if special_fireball:
@@ -145,6 +156,7 @@ func _physics_process(delta):
 		special_fireball = false
 		special_fireball_timer = 0
 		special_fireball_moment = 0
+		is_special_move_running = false
 		
 	#Special summon
 	if special_summon:
@@ -152,7 +164,8 @@ func _physics_process(delta):
 			summon_monster(special_summon_ball.position)
 			special_summon = false
 			special_summon_ball.destroy()
-	
+			is_special_move_running = false
+			
 	for bat in special_summon_bat_list:
 		if bat[0]:
 			bat[1].attack(player_position)

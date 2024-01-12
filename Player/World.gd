@@ -14,7 +14,7 @@ var boss_wait_time = 1
 var boss_action_moment = 0
 var boss_random_ability 
 var boss_die = false
-
+var boss_is_special_move = 0 #0 is not, 1 is true
 
 
 func _process(delta):
@@ -67,7 +67,24 @@ func _on_gate_boss_body_entered(body):
 
 func boss_decision_model(delta):
 	var rng = RandomNumberGenerator.new()
-	boss_random_ability  = rng.randi_range(0, len($"Boss 1".ABILITY) - 1)
 	
-	$"Boss 1".decision = $"Boss 1".ABILITY[boss_random_ability]
+	boss_is_special_move = rng.randi_range(0, 1)
+	
+	if boss_is_special_move == 0:
+		var boss_move = rng.randi_range(0, 2)
+		$"Boss 1".decision = $"Boss 1".MOVING_ABILITY[boss_move]
+	
+	if not $"Boss 1".special_move_sleep:
+		if boss_is_special_move == 1 and not $"Boss 1".is_special_move_running:
+			boss_random_ability  = rng.randi_range(0, len($"Boss 1".ABILITY) - 1)
+			$"Boss 1".decision = $"Boss 1".ABILITY[boss_random_ability]
+			$"Boss 1".special_move_sleep = true
+			#print(1)
+		#print($"Boss 1".is_special_move_running)
+	else: 
+		$"Boss 1".special_move_timer += delta
+		#print($"Boss 1".special_move_timer)
+		if $"Boss 1".special_move_timer >= $"Boss 1".SPECIAL_MOVE_COOLDOWN:
+			$"Boss 1".special_move_sleep = false
+			$"Boss 1".special_move_timer = 0
 	
