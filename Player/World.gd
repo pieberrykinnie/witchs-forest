@@ -67,16 +67,23 @@ func _on_gate_boss_body_entered(body):
 
 func boss_decision_model(delta):
 	var rng = RandomNumberGenerator.new()
-	
+	var boss_move
 	boss_is_special_move = rng.randi_range(0, 1)
 	
-	if boss_is_special_move == 0:
-		var boss_move = rng.randi_range(0, 2)
+	if boss_is_special_move == 0 or boss_random_ability == 0:
+		if boss_random_ability == 0:
+			if $Player.position.x - $"Boss 1".position.x < 0:
+				boss_move = 1
+			if $Player.position.x - $"Boss 1".position.x > 0:
+				boss_move = 0
+		else:
+			boss_move = rng.randi_range(0, 2)
+		
 		$"Boss 1".decision = $"Boss 1".MOVING_ABILITY[boss_move]
 	
 	if not $"Boss 1".special_move_sleep:
 		if boss_is_special_move == 1 and not $"Boss 1".is_special_move_running:
-			boss_random_ability  = rng.randi_range(0, len($"Boss 1".ABILITY) - 1)
+			boss_random_ability  = 0#rng.randi_range(0, len($"Boss 1".ABILITY) - 1)
 			$"Boss 1".decision = $"Boss 1".ABILITY[boss_random_ability]
 			$"Boss 1".special_move_sleep = true
 			#print(1)
