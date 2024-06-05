@@ -10,3 +10,8 @@ Single-level platformer game inspired by materials like Mega Man and Witch's Spr
 - Run the `witchs-forest.exe` file to play the game
 
 Alternatively: Click on `<> Code` -> `Download ZIP` -> extract and run `witchs-forest.exe` (or use `git clone`)
+
+## Instructions
+
+- Arrow keys: `left` and `right` to move, `up` to jump
+- `C`: Attack
