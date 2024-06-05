@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 
-const SPEED = 1.0
+const SPEED = 1.5
 
 @onready var player_location = $"../Player"
 var detect_player = false

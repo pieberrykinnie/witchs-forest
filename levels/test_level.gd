@@ -46,6 +46,7 @@ func _on_player_death():
 
 
 func _on_restart_timeout():
+	print("Death")
 	get_tree().reload_current_scene()
 
 
@@ -71,7 +72,7 @@ func boss_decision_model(delta):
 	var boss_move
 	boss_is_special_move = rng.randi_range(0, 1)
 	
-	if boss_is_special_move == 0:
+	if boss_is_special_move == 0 or boss_random_ability == 0:
 		if boss_random_ability == 0:
 			if $Player.position.x - $"Boss 1".position.x < 0:
 				boss_move = 1

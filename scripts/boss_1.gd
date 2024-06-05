@@ -7,7 +7,7 @@ const summon_slime_path = preload("res://scenes/slime.tscn")
 const summon_bat_path = preload("res://scenes/bat.tscn")
 
 #general constants 
-const SPEED = 300.0
+const SPEED = 200.0
 const JUMP_VELOCITY = -400.0
 const ABILITY = ["jump_and_hit", "charge_and_hit", "fireball", "summon_monster"]
 const MOVING_ABILITY = ["left", "right", "up"]

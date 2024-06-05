@@ -146,6 +146,8 @@ func _on_enemy_collision_body_entered(_body):
 			animated_sprite.play("death")
 			invincible = true
 			$Death.play()
+			death.emit()
+			
 		
 		else:
 			animated_sprite.play("hit")

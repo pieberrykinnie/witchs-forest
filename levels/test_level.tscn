@@ -1505,7 +1505,7 @@ position = Vector2(0.5, 1)
 shape = SubResource("RectangleShape2D_dommy")
 
 [node name="Restart" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.0
 one_shot = true
 
 [node name="Slime" parent="." instance=ExtResource("3_flwsh")]
@@ -1567,6 +1567,7 @@ stream = ExtResource("11_exm3s")
 [node name="BossMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_r3l5k")
 
+[connection signal="death" from="Player" to="." method="_on_player_death"]
 [connection signal="body_exited" from="Camera2D/ScreenRange" to="Camera2D/ScreenRange" method="_on_body_exited"]
 [connection signal="timeout" from="Restart" to="." method="_on_restart_timeout"]
 [connection signal="body_entered" from="SpawnBoss" to="." method="_on_spawn_boss_body_entered"]
